@@ -5,7 +5,7 @@
 	"name": "codeco",
 	"displayName": "CoDeCo",
 	"description": "Code Decorator for VS Code",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"engines": {
 		"vscode": "^1.60.0"
 	},
@@ -17,6 +17,17 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "CoDeCo Configuration",
+            "properties": {
+                "codeco.updateDelay": {
+                    "type": "integer",
+                    "default": 100,
+                    "description": "The delay in ms until the editor gets updated."
+                }
+			}
+		},
 		"colors": [
 			{
 				"id": "codeco.fullWidthSpaceBackground",

@@ -16,6 +16,9 @@ export function activate(context: vscode.ExtensionContext) {
 		backgroundColor: { id: 'codeco.fullWidthSpaceBackground' }
 	});
 
+	// Get Config
+	const updateDelay = vscode.workspace.getConfiguration('codeco')['updateDelay'] || 100;
+
 	let activeEditor = vscode.window.activeTextEditor;
 
 	function updateDecorations() {
@@ -60,7 +63,7 @@ export function activate(context: vscode.ExtensionContext) {
 			clearTimeout(timeout);
 			timeout = undefined;
 		}
-		timeout = setTimeout(updateDecorations, 100);
+		timeout = setTimeout(updateDecorations, updateDelay);
 	}
 
 	if (activeEditor) {
