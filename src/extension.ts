@@ -17,7 +17,9 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	// Get Config
-	const updateDelay = vscode.workspace.getConfiguration('codeco')['updateDelay'] || 100;
+	const updateDelay = vscode.workspace.getConfiguration('codeco')['updateDelay'];
+	const displayEOL = vscode.workspace.getConfiguration('codeco')['displayEOL'];
+	const displayFullWidthSpace = vscode.workspace.getConfiguration('codeco')['displayFullWidthSpace'];
 
 	let activeEditor = vscode.window.activeTextEditor;
 
@@ -31,12 +33,12 @@ export function activate(context: vscode.ExtensionContext) {
 		const eol: vscode.DecorationOptions[] = [];
 		let match;
 		while ((match = regEx.exec(text))) {
-			if (/\u3000/g.test(match[0])) {
+			if (/\u3000/g.test(match[0]) && displayFullWidthSpace) {
 				const startPos = activeEditor.document.positionAt(match.index);
 				const endPos = activeEditor.document.positionAt(match.index + match[0].length);
 				const decoration = { range: new vscode.Range(startPos, endPos) };
 				fullWidthSpace.push(decoration);
-			} else {
+			} else if (/(\r(?!\n))|(\r?\n)/g.test(match[0]) && displayEOL) {
 				const decorationText = getEolDecorationInfo(match[0]);
 				const decTxt = decorationText[0];
 				const decColor = decorationText[1];
