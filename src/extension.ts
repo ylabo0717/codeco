@@ -60,7 +60,7 @@ export function activate(context: vscode.ExtensionContext) {
 			clearTimeout(timeout);
 			timeout = undefined;
 		}
-		timeout = setTimeout(updateDecorations, 500);
+		timeout = setTimeout(updateDecorations, 100);
 	}
 
 	if (activeEditor) {
